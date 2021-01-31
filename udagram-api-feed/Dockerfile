@@ -1,37 +1,21 @@
-language: node_js
-node_js:
-  - 13
+# Use NodeJS base image
+FROM node:13
 
-services:
-  - docker
+# Create app directory
+WORKDIR /usr/src/app
 
-# Pre-testing installs
-install:
-  - echo "nothing needs to be installed"
+# Install app dependencies by copying
+# package.json and package-lock.json
+COPY package*.json ./
 
-# Scripts to be run such as tests
-before_script:
-  - cd udagram-api-user
-  - echo "no tests"
+# Install dependencies
+RUN npm install
 
-script:
-  - docker --version # print the version for logging
-  - docker build -f udagram-api-user/DockerFile
-  - docker tag simple-node benyusouf/udagram-api-user:latest
+# Copy app source
+COPY . .
 
-after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push benyusouf/udagram-api-user
+# Bind the port that the image will run on
+EXPOSE 8281
 
-before_script:
-  - cd udagram-api-feed
-  - echo "no tests"
-
-script:
-  - docker --version # print the version for logging
-  - docker build -f udagram-api-feed/DockerFile
-  - docker tag simple-node benyusouf/udagram-api-feed:latest
-
-after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push benyusouf/udagram-api-feed 
+# Define the Docker image's behavior at runtime
+CMD ["node", "server.js"]
