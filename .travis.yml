@@ -11,12 +11,11 @@ install:
 
 # Scripts to be run such as tests
 before_script:
-  - cd udagram-api-user
   - echo "no tests"
 
 script:
   - docker --version # print the version for logging
-  - docker build -f udagram-api-user/DockerFile
+  - docker build -t udagram-api-user -f udagram-api-user/Dockerfile
   - docker tag udagram-api-user benyusouf/udagram-api-user:latest
 
 after_success:
@@ -24,12 +23,11 @@ after_success:
   - docker push benyusouf/udagram-api-user
 
 before_script:
-  - cd udagram-api-feed
   - echo "no tests"
 
 script:
   - docker --version # print the version for logging
-  - docker build -f udagram-api-feed/DockerFile
+  - docker build -f udagram-api-feed/Dockerfile
   - docker tag udagram-api-feed benyusouf/udagram-api-feed:latest
 
 after_success:
