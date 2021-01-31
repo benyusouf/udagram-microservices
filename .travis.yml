@@ -15,21 +15,12 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - docker build -t udagram-api-user -f udagram-api-user/Dockerfile
+  - docker build -t udagram-api-user -f udagram-api-user/Dockerfile .
   - docker tag udagram-api-user benyusouf/udagram-api-user:latest
-
-after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push benyusouf/udagram-api-user
-
-before_script:
-  - echo "no tests"
-
-script:
-  - docker --version # print the version for logging
-  - docker build -f udagram-api-feed/Dockerfile
+  - docker build -t udagram-api-feed -f udagram-api-feed/Dockerfile .
   - docker tag udagram-api-feed benyusouf/udagram-api-feed:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push benyusouf/udagram-api-feed 
+  - docker push benyusouf/udagram-api-user
+  - docker push benyusouf/udagram-api-feed
