@@ -19,8 +19,11 @@ script:
   - docker tag udagram-api-user benyusouf/udagram-api-user:latest
   - docker build -t udagram-api-feed -f udagram-api-feed/Dockerfile .
   - docker tag udagram-api-feed benyusouf/udagram-api-feed:latest
+  - docker build -t udagram-front-end -f udagram-frontend/Dockerfile .
+  - docker tag udagram-front-end benyusouf/udagram-front-end:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push benyusouf/udagram-api-user
   - docker push benyusouf/udagram-api-feed
+  - docker push benyusouf/udagram-front-end
