@@ -2,7 +2,7 @@ FROM node:13-alpine as build
 WORKDIR /app
 COPY package*.json /app/
 RUN npm install -g ionic
-RUN npm ci
+RUN npm install
 COPY ./ /app/
 RUN npm run-script build:prod
 FROM nginx:alpine
