@@ -22,9 +22,14 @@ script:
   - "cd udagram-frontend"
   - docker build -t benyusouf/udagram-front-end .
   - docker tag benyusouf/udagram-front-end benyusouf/udagram-front-end:latest
+  - "cd .."
+  - "cd reverse-proxy"
+  - docker build -t benyusouf/reverse-proxy .
+  - docker tag benyusouf/reverse-proxy benyusouf/reverse-proxy:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push benyusouf/udagram-api-user
   - docker push benyusouf/udagram-api-feed
   - docker push benyusouf/udagram-front-end
+  - docker push benyusouf/reverse-proxy
