@@ -58,12 +58,12 @@ spec:
         - name: POSTGRESS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: udagram
+              name: env-secret
               key: POSTGRESS_PASSWORD
         - name: POSTGRESS_USERNAME
           valueFrom:
             secretKeyRef:
-              name: udagram
+              name: env-secret
               key: POSTGRESS_USERNAME     
         volumeMounts:
         - name: aws-secret
